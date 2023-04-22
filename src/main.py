@@ -3,6 +3,8 @@ import yfinance as yf
 import re
 
 def main():
+    manager = WallStreetManager()
+
     # Using microsoft as placeholder ticker to grab viable keys for sorting
     msft = yf.Ticker("MSFT")
     viableKeys = []
@@ -27,8 +29,13 @@ def main():
 
     while sortChoice not in [str(i) for i in range(1, len(displayKeyMap) + 1)]:
         sortChoice = input(f'Enter a number between 1 and {len(displayKeyMap)}: ')
-
+    sortAttr = list(displayKeyMap.keys())[int(sortChoice) - 1]
     manager = WallStreetManager()
+    sortedTickers = manager.sortByAttr(sortAttr)
+
+    print('RESULTS:')
+    for ticker in sortedTickers:
+        print(ticker)
 
         
 if __name__ == '__main__':
