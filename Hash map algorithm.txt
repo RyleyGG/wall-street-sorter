@@ -1,0 +1,57 @@
+//psuedo code for map implementation for wall street sorter
+#include <map>
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <vector>
+using namespace std;
+
+
+struct Ticker{
+	int fact1;  //value points for data we're anaylzing. can add more or less
+	int fact2;
+	int fact3;
+}
+
+map<string, Ticker> sMap;
+vector<string> tickerNames //vector to hold all names
+
+//code to grab each ticker from microsoft
+
+while(//grabbing from microsoft has more data){
+	string tick = yf.ticker;
+	tickerNames.push_back(tick);
+	Ticker temp;
+	
+	temp.fact1 = tickerObj.info[attr1];
+	temp.fact2 = tickerObj.info[attr2];
+	temp.fact3 = tickerObj.info[attr3];
+
+	sMap[tick] = temp;
+	
+}
+
+//code for user specification
+string input;
+cout << "What would you like to sort by? (pick 1, 2, or 3)"
+cin >> input;
+
+int choice = (int)input;
+int largest = 0;
+string best;
+
+for(unsigned int i = 0; i < tickerNames.size(); i++){
+	if(sMap.count(tickerNames[i]) > 0){
+		if(sMap[tickerNames[i]].choice > largest){
+			largest = sMap[tickerNames[i]].choice;
+			best = tickerNames[i];
+}
+}
+}
+
+//once code has finished best will hold ticker name of highest valued stock based on data specified from the user.
+
+
+
+
+
