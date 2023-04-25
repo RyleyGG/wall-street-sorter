@@ -69,7 +69,6 @@ class WallStreetManager:
                 interval='1d',
                 progress=False
             )
-            totalDataPoints += len(historicalData)
             historicalData['daily_volatility'] = historicalData['Close'].pct_change().abs()
             historicalData.reset_index(inplace=True)
             historicalData.rename(columns={'index': 'Date'}, inplace=True)
@@ -84,6 +83,7 @@ class WallStreetManager:
                 if high > highPrice:
                     highPrice = high
                 if not np.isnan(row['daily_volatility']):
+                    totalDataPoints += 1
                     totalVolaArr.append((ticker, str(row['Date']).split(' ')[0], row['daily_volatility']))
                     
             dailyReturns = historicalData['Close'].pct_change().dropna()
@@ -94,7 +94,7 @@ class WallStreetManager:
         print('\nSorting tickers by average historical volatility...')
         self.quickSort(avgVolaArr, 3)
         for result in avgVolaArr:
-            print(f"{result[0]}: Lowest price: {result[1]}, Highest price: {result[2]}, Volatility: {round(result[3], 2)}")
+            print(f"{result[0]}: Lowest price: {round(result[1], 2)}, Highest price: {round(result[2], 2)}, Volatility: {round(result[3], 2)}")
         print('\nSorting tickers by daily volatility...')
         self.quickSort(totalVolaArr, 2)
         print('LOWEST 50 NONZERO VOLATILITIES:')
