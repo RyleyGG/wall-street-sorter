@@ -30,12 +30,20 @@ def main():
     while sortChoice not in [str(i) for i in range(1, len(displayKeyMap) + 1)]:
         sortChoice = input(f'Enter a number between 1 and {len(displayKeyMap)}: ')
     sortAttr = list(displayKeyMap.keys())[int(sortChoice) - 1]
-    manager = WallStreetManager()
-    sortedTickers = manager.sortByAttr(sortAttr)
 
-    print('RESULTS:')
-    for ticker in sortedTickers:
-        print(ticker)
+    print('\nI prefer...')
+    print('1. Tickers with lowest values\n2. Tickers with highest values')
+    lowHighChoice = input()
+    while lowHighChoice not in ['1', '2']:
+        lowHighChoice = input('Enter the number associated with your choice: ')
+    manager.resultPref = 'lowest' if lowHighChoice == '1' else 'highest'
+    print(f'Beginning ticker sort by {displayKeyMap[sortAttr]}')
+    manager.sortByAttr(sortAttr)
+    print(f'The ticker with the {manager.resultPref} value for {displayKeyMap[sortAttr]}' +
+          f' was {list(manager.tickerObj.keys())[0] if manager.resultPref == "lowest" else list(manager.tickerObj.keys())[-1]}' +
+          f' with a value of {list(manager.tickerObj.values())[0] if manager.resultPref == "lowest" else list(manager.tickerObj.values())[-1]}')
+    print(f'\nGrabbing historical data for 100 tickers with {"lowest" if lowHighChoice == "1" else "highest"} values for {displayKeyMap[sortAttr]}...')
+    manager.historicalAnalysis()
 
         
 if __name__ == '__main__':
